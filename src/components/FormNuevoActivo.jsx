@@ -103,6 +103,7 @@ const FormNuevoActivo = () => {
     >
       {msg && (
         <Alert
+          variant="outlined"
           severity={typeAlert}
           sx={{ marginBottom: "20px" }}
           children={msg}

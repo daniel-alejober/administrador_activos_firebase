@@ -92,7 +92,12 @@ const Login = () => {
         ADMINISTRADOR DE ACTIVOS
       </h1>
       {msg && (
-        <Alert severity="error" sx={{ marginBottom: "20px" }} children={msg} />
+        <Alert
+          variant="outlined"
+          severity="error"
+          sx={{ marginBottom: "20px" }}
+          children={msg}
+        />
       )}
       <form
         onSubmit={handleSubmit}

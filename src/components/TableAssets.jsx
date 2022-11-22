@@ -7,6 +7,9 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
+import EditIcon from "@mui/icons-material/Edit";
+import IconButton from "@mui/material/IconButton";
+import DeleteIcon from "@mui/icons-material/Delete";
 
 const TableAssets = ({ rows }) => {
   const StyledTableCell = styled(TableCell)(({ theme }) => ({
@@ -40,6 +43,7 @@ const TableAssets = ({ rows }) => {
             <StyledTableCell align="center">Cantidad</StyledTableCell>
             <StyledTableCell align="center">Costo</StyledTableCell>
             <StyledTableCell align="center">Fecha</StyledTableCell>
+            <StyledTableCell align="center">Acciones</StyledTableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -66,6 +70,14 @@ const TableAssets = ({ rows }) => {
                 ${row?.price * row?.quantity}
               </StyledTableCell>
               <StyledTableCell align="center">{row?.date}</StyledTableCell>
+              <StyledTableCell align="center">
+                <IconButton aria-label="edit" color="info">
+                  <EditIcon />
+                </IconButton>
+                <IconButton aria-label="delete" color="error">
+                  <DeleteIcon />
+                </IconButton>
+              </StyledTableCell>
             </StyledTableRow>
           ))}
         </TableBody>

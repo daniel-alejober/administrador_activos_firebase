@@ -15,14 +15,17 @@ import IconButton from "@mui/material/IconButton";
 import SearchIcon from "@mui/icons-material/Search";
 import RefreshIcon from "@mui/icons-material/Refresh";
 import TableAssets from "../components/TableAssets";
+import CircularProgress from "@mui/material/CircularProgress";
 
 export default function Dashboard() {
   const navigate = useNavigate();
   const [rows, setRows] = useState([]);
+  const [loading, setLoading] = useState(false);
   const { setHeaderNav } = useActivo();
 
   useEffect(() => {
     const getAssets = async () => {
+      setLoading(true);
       let list = [];
       try {
         const querySnapshot = await getDocs(collection(db, "assets"));
@@ -32,6 +35,7 @@ export default function Dashboard() {
           list.push(data);
         });
         setRows(list);
+        setLoading(false);
       } catch (error) {
         console.log(error);
       }
@@ -81,7 +85,9 @@ export default function Dashboard() {
           </Grid>
         </Toolbar>
       </AppBar>
-      {rows.length ? (
+      {loading ? (
+        <CircularProgress />
+      ) : rows.length ? (
         <TableAssets rows={rows} />
       ) : (
         <Typography

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import useActivo from "../hooks/useActivo";
 import { uid } from "../hooks/uid";
 import { storage } from "../firebase/firebase";
@@ -15,6 +15,10 @@ const ImagenNuevoActivo = () => {
   const [uploadImg, setUploadImg] = useState(false);
   const [msg, setMsg] = useState("");
   const [typeAlert, setTypeAlert] = useState("");
+
+  useEffect(() => {
+    setFile("");
+  }, []);
 
   const saveImg = () => {
     const name = uid();
@@ -108,6 +112,7 @@ const ImagenNuevoActivo = () => {
           severity={typeAlert}
           sx={{ marginBottom: "20px" }}
           children={msg}
+          variant="outlined"
         />
       )}
     </Grid>
