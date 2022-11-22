@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import useActivo from "../hooks/useActivo";
 import { uid } from "../hooks/uid";
 import { storage } from "../firebase/firebase";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
@@ -10,7 +11,7 @@ import Button from "@mui/material/Button";
 import Alert from "@mui/material/Alert";
 
 const ImagenNuevoActivo = () => {
-  const [file, setFile] = useState("");
+  const { setUrlImg, file, setFile } = useActivo();
   const [uploadImg, setUploadImg] = useState(false);
   const [msg, setMsg] = useState("");
   const [typeAlert, setTypeAlert] = useState("");
@@ -41,12 +42,11 @@ const ImagenNuevoActivo = () => {
       },
       () => {
         getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-          console.log("File available at", downloadURL);
+          setUrlImg(downloadURL);
           setUploadImg(false);
-          setFile("");
           if (downloadURL) {
             setTypeAlert("success");
-            setMsg("Imagen guardada correctamente");
+            setMsg("Imagen validada correctamente");
             setTimeout(() => {
               setMsg("");
               setTypeAlert("");
@@ -99,7 +99,7 @@ const ImagenNuevoActivo = () => {
           color="success"
           onClick={saveImg}
         >
-          Guardar Imagen
+          Validar Imagen
         </Button>
       ) : null}
       {file && uploadImg ? <CircularProgress /> : null}

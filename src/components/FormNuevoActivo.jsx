@@ -11,7 +11,7 @@ import dayjs from "dayjs";
 import Alert from "@mui/material/Alert";
 
 const FormNuevoActivo = () => {
-  const { createNewAsset, assetRef } = useActivo();
+  const { createNewAsset, assetRef, urlImg, setFile } = useActivo();
   let now = dayjs();
   const [msg, setMsg] = useState("");
   const [typeAlert, setTypeAlert] = useState("");
@@ -39,6 +39,16 @@ const FormNuevoActivo = () => {
       return;
     }
 
+    if (urlImg === "") {
+      setTypeAlert("error");
+      setMsg("No hay imagen valida");
+      setTimeout(() => {
+        setMsg("");
+        setTypeAlert("");
+      }, 2500);
+      return;
+    }
+
     const dateAsset = `${fechaActivo.$D}/${fechaActivo.$M + 1}/${
       fechaActivo.$y
     }`;
@@ -48,9 +58,11 @@ const FormNuevoActivo = () => {
       date: dateAsset,
       typeService: servicio,
       quantity: cantidad,
+      urlImg: urlImg,
     };
     createNewAsset(data);
 
+    setFile("");
     setNombreActivo("");
     setFechaActivo(null);
     setServicio("");
