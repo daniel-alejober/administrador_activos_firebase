@@ -154,8 +154,11 @@ const drawerWidth = 256;
 
 export const ProtectedRroutes = () => {
   const { userAuth } = useAdmin();
+  let userId = null;
   const user = JSON.parse(localStorage.getItem("user"));
-  const userId = user.uid;
+  if (user) {
+    userId = user.uid;
+  }
 
   if (userAuth.accessToken && userId) {
     return (
