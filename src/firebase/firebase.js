@@ -1,6 +1,7 @@
 import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth"; //*poder autenticar al usuario
 import { getFirestore } from "firebase/firestore"; //* poder empezar a guardar datos en la db
+import { getStorage } from "firebase/storage"; //* poder subir archivos a firebase(files o img)
 
 //admin@adminactivos.com-admin123
 
@@ -16,3 +17,4 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 export const db = getFirestore(app);
 export const auth = getAuth();
+export const storage = getStorage(app);
