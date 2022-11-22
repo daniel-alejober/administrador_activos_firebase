@@ -9,6 +9,10 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DesktopDatePicker } from "@mui/x-date-pickers/DesktopDatePicker";
 import dayjs from "dayjs";
 import Alert from "@mui/material/Alert";
+import FormControl from "@mui/material/FormControl";
+import InputLabel from "@mui/material/InputLabel";
+import OutlinedInput from "@mui/material/OutlinedInput";
+import InputAdornment from "@mui/material/InputAdornment";
 
 const FormNuevoActivo = () => {
   const { createNewAsset, assetRef, urlImg, setFile } = useActivo();
@@ -20,6 +24,7 @@ const FormNuevoActivo = () => {
   const [fechaActivo, setFechaActivo] = useState(now);
   const [servicio, setServicio] = useState("");
   const [cantidad, setCantidad] = useState(1);
+  const [precio, setPrecio] = useState(0);
   const serviciosLista = [
     { id: 1, nombre: "Pagina Web" },
     { id: 2, nombre: "Telefonia" },
@@ -29,9 +34,19 @@ const FormNuevoActivo = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    if ([nombreActivo, fechaActivo, servicio, cantidad].includes("")) {
+    if ([nombreActivo, fechaActivo, servicio, cantidad, precio].includes("")) {
       setTypeAlert("error");
       setMsg("Todos los campos son obligatorios!");
+      setTimeout(() => {
+        setMsg("");
+        setTypeAlert("");
+      }, 2500);
+      return;
+    }
+
+    if (precio <= 0) {
+      setTypeAlert("error");
+      setMsg("Ingresa un precio valido");
       setTimeout(() => {
         setMsg("");
         setTypeAlert("");
@@ -59,16 +74,16 @@ const FormNuevoActivo = () => {
       typeService: servicio,
       quantity: cantidad,
       urlImg: urlImg,
+      price: precio,
     };
     createNewAsset(data);
 
-    setFile("");
-    setNombreActivo("");
-    setFechaActivo(null);
-    setServicio("");
-    setCantidad(1);
-
     if (assetRef.id) {
+      setFile("");
+      setNombreActivo("");
+      setFechaActivo(null);
+      setServicio("");
+      setCantidad(1);
       setTypeAlert("success");
       setMsg("Activo agregado correctamente");
       setTimeout(() => {
@@ -162,6 +177,28 @@ const FormNuevoActivo = () => {
           value={cantidad}
           onChange={(e) => setCantidad(e.target.value)}
         />
+
+        <FormControl>
+          <InputLabel htmlFor="outlined-adornment-amount">Precio</InputLabel>
+          <OutlinedInput
+            InputProps={{
+              inputProps: {
+                min: 0,
+              },
+            }}
+            size="small"
+            sx={{
+              width: "90%",
+              margin: "10px 0",
+            }}
+            type="number"
+            id="outlined-adornment-amount"
+            value={precio}
+            onChange={(e) => setPrecio(e.target.value)}
+            startAdornment={<InputAdornment position="start">$</InputAdornment>}
+            label="Cantidad"
+          />
+        </FormControl>
 
         <Button
           sx={{

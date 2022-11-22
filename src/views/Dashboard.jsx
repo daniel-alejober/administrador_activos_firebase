@@ -1,4 +1,7 @@
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { collection, getDocs } from "firebase/firestore";
+import { db } from "../firebase/firebase";
 import useActivo from "../hooks/useActivo";
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
@@ -11,10 +14,30 @@ import Tooltip from "@mui/material/Tooltip";
 import IconButton from "@mui/material/IconButton";
 import SearchIcon from "@mui/icons-material/Search";
 import RefreshIcon from "@mui/icons-material/Refresh";
+import TableAssets from "../components/TableAssets";
 
 export default function Dashboard() {
   const navigate = useNavigate();
+  const [rows, setRows] = useState([]);
   const { setHeaderNav } = useActivo();
+
+  useEffect(() => {
+    const getAssets = async () => {
+      let list = [];
+      try {
+        const querySnapshot = await getDocs(collection(db, "assets"));
+        querySnapshot.forEach((doc) => {
+          let data = doc.data();
+          data.id = doc.id;
+          list.push(data);
+        });
+        setRows(list);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    getAssets();
+  }, []);
 
   const toNewAsset = () => {
     navigate("/newasset");
@@ -27,7 +50,7 @@ export default function Dashboard() {
         position="static"
         color="default"
         elevation={0}
-        sx={{ borderBottom: "1px solid rgba(0, 0, 0, 0.12)" }}
+        sx={{ borderBottom: "1px solid #0000001e" }}
       >
         <Toolbar>
           <Grid container spacing={2} alignItems="center">
@@ -58,9 +81,17 @@ export default function Dashboard() {
           </Grid>
         </Toolbar>
       </AppBar>
-      <Typography sx={{ my: 5, mx: 2 }} color="text.secondary" align="center">
-        No users for this project yet
-      </Typography>
+      {rows.length ? (
+        <TableAssets rows={rows} />
+      ) : (
+        <Typography
+          sx={{ my: 5, mx: 2, fontWeight: "Bold" }}
+          color="#a10a0acf"
+          align="center"
+        >
+          No hay activos agregados
+        </Typography>
+      )}
     </Paper>
   );
 }

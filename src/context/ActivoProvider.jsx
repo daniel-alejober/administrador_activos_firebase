@@ -16,6 +16,7 @@ const ActivoProvider = ({ children }) => {
     typeService,
     quantity,
     urlImg,
+    price,
   }) => {
     //* setDoc(doc(db, "cities", "LA"){}) -- setDoc() sirve para crear o sobreescribir un documento pero el mejor hacerlos por el metodo addDoc() ya que asi firebase te genera un id unico
     //*Parametros de la funcion doc(db, "nombreColleccion", "idUnico")
@@ -30,6 +31,7 @@ const ActivoProvider = ({ children }) => {
         typeService,
         quantity,
         urlImg,
+        price,
       });
       setAssetRef(docRef);
     } catch (error) {
