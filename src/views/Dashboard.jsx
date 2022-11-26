@@ -1,7 +1,5 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { collection, getDocs } from "firebase/firestore";
-import { db } from "../firebase/firebase";
 import useActivo from "../hooks/useActivo";
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
@@ -19,33 +17,16 @@ import CircularProgress from "@mui/material/CircularProgress";
 
 export default function Dashboard() {
   const navigate = useNavigate();
-  const [rows, setRows] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const { setHeaderNav } = useActivo();
+
+  const { setHeaderNav, rows, loading, getAssets } = useActivo();
 
   useEffect(() => {
-    const getAssets = async () => {
-      setLoading(true);
-      let list = [];
-      try {
-        const querySnapshot = await getDocs(collection(db, "assets"));
-        querySnapshot.forEach((doc) => {
-          let data = doc.data();
-          data.id = doc.id;
-          list.push(data);
-        });
-        setRows(list);
-        setLoading(false);
-      } catch (error) {
-        console.log(error);
-      }
-    };
     getAssets();
   }, []);
 
   const toNewAsset = () => {
-    navigate("/newasset");
     setHeaderNav(1);
+    navigate("/newasset");
   };
 
   return (

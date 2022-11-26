@@ -19,7 +19,10 @@ function Header() {
             <Grid item xs />
             <Grid item>
               <IconButton color="inherit" sx={{ p: 0.5 }}>
-                <Avatar src="/static/images/avatar/1.jpg" alt="My Avatar" />
+                <Avatar
+                  src="https://firebasestorage.googleapis.com/v0/b/administrador-activos.appspot.com/o/UPIICSA.jpg?alt=media&token=b4a5a17c-e164-4f86-b3ed-4d76192a3c0d"
+                  alt="My Avatar"
+                />
               </IconButton>
             </Grid>
           </Grid>
@@ -51,6 +54,7 @@ function Header() {
         <Tabs value={headerNav} textColor="inherit">
           <Tab label="Inventario" />
           <Tab label="Nuevo Activo" />
+          <Tab label="Actualizar Activo" />
         </Tabs>
       </AppBar>
     </>

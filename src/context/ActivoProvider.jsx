@@ -1,14 +1,27 @@
 import { createContext, useState } from "react";
-import { collection, addDoc } from "firebase/firestore";
+import {
+  collection,
+  addDoc,
+  getDocs,
+  doc,
+  getDoc,
+  setDoc,
+} from "firebase/firestore";
 import { db } from "../firebase/firebase";
+import { useNavigate } from "react-router-dom";
 
 const ActivoContext = createContext();
 
 const ActivoProvider = ({ children }) => {
+  const navigate = useNavigate();
   const [headerNav, setHeaderNav] = useState(0);
   const [assetRef, setAssetRef] = useState({});
   const [file, setFile] = useState("");
   const [urlImg, setUrlImg] = useState("");
+  const [rows, setRows] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [dataAsset, setDataAsset] = useState({});
+  const [idAsset, setIdAsset] = useState("");
 
   const createNewAsset = async ({
     nameAsset,
@@ -39,6 +52,54 @@ const ActivoProvider = ({ children }) => {
     }
   };
 
+  const getAssets = async () => {
+    setLoading(true);
+    let list = [];
+    try {
+      const querySnapshot = await getDocs(collection(db, "assets"));
+      querySnapshot.forEach((doc) => {
+        let data = doc.data();
+        data.id = doc.id;
+        list.push(data);
+      });
+      setRows(list);
+      setLoading(false);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const getAssetById = async (id) => {
+    setIdAsset(id);
+    try {
+      const docRef = doc(db, "assets", id);
+      const docSnap = await getDoc(docRef);
+      if (docSnap.exists()) {
+        setDataAsset(docSnap.data());
+      }
+    } catch (error) {
+      console.log(data);
+    }
+  };
+
+  const editAssetById = async (id, data) => {
+    try {
+      const docRef = doc(db, "assets", id);
+
+      await setDoc(docRef, {
+        nameAsset: data?.nameAsset,
+        date: data?.date,
+        typeService: data?.typeService,
+        quantity: data?.quantity,
+        urlImg: data?.urlImg,
+        price: data?.price,
+      });
+      navigate("/");
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <ActivoContext.Provider
       value={{
@@ -46,10 +107,17 @@ const ActivoProvider = ({ children }) => {
         assetRef,
         urlImg,
         file,
+        rows,
+        loading,
+        dataAsset,
+        idAsset,
+        getAssets,
         setFile,
         setUrlImg,
         setHeaderNav,
         createNewAsset,
+        getAssetById,
+        editAssetById,
       }}
     >
       {children}

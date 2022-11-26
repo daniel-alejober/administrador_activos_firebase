@@ -47,13 +47,13 @@ const itemCategory = {
 };
 
 export default function Navigator(props) {
-  const navigate = useNavigate();
   const { setHeaderNav } = useActivo();
+  const navigate = useNavigate();
   const { ...other } = props;
 
   const home = () => {
-    navigate("/");
     setHeaderNav(0);
+    navigate("/");
   };
 
   return (

@@ -7,24 +7,27 @@ import MenuItem from "@mui/material/MenuItem";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DesktopDatePicker } from "@mui/x-date-pickers/DesktopDatePicker";
-import dayjs from "dayjs";
 import Alert from "@mui/material/Alert";
 import FormControl from "@mui/material/FormControl";
 import InputLabel from "@mui/material/InputLabel";
 import OutlinedInput from "@mui/material/OutlinedInput";
 import InputAdornment from "@mui/material/InputAdornment";
 
-const FormNuevoActivo = () => {
-  const { createNewAsset, assetRef, urlImg, setFile } = useActivo();
-  let now = dayjs();
+const FormEditActivo = () => {
+  const { dataAsset, urlImg, idAsset, editAssetById } = useActivo();
+  const dateDb = dataAsset?.date;
+  const arrayDate = dateDb.split("/");
+  const newDateDb = `${arrayDate[1]}/${arrayDate[0]}/${arrayDate[2]}`;
+
   const [msg, setMsg] = useState("");
   const [typeAlert, setTypeAlert] = useState("");
 
-  const [nombreActivo, setNombreActivo] = useState("");
-  const [fechaActivo, setFechaActivo] = useState(now);
-  const [servicio, setServicio] = useState("");
-  const [cantidad, setCantidad] = useState(1);
-  const [precio, setPrecio] = useState(0);
+  const [nombreActivo, setNombreActivo] = useState(dataAsset?.nameAsset);
+  const [fechaActivo, setFechaActivo] = useState(newDateDb);
+  const [servicio, setServicio] = useState(dataAsset?.typeService);
+  const [cantidad, setCantidad] = useState(dataAsset?.quantity);
+  const [precio, setPrecio] = useState(dataAsset?.price);
+
   const serviciosLista = [
     { id: 1, nombre: "Pagina Web" },
     { id: 2, nombre: "Telefonia" },
@@ -53,48 +56,24 @@ const FormNuevoActivo = () => {
       }, 2500);
       return;
     }
-
-    if (urlImg === "") {
-      setTypeAlert("error");
-      setMsg("No hay imagen valida");
-      setTimeout(() => {
-        setMsg("");
-        setTypeAlert("");
-      }, 2500);
-      return;
-    }
-
     const dateAsset = `${fechaActivo.$D}/${fechaActivo.$M + 1}/${
       fechaActivo.$y
     }`;
 
+    const arrayFechaActivo = fechaActivo.split("/");
+    const newFechaActivo = `${arrayFechaActivo[1]}/${arrayFechaActivo[0]}/${arrayFechaActivo[2]}`;
+
     const data = {
       nameAsset: nombreActivo,
-      date: dateAsset,
+      date: newFechaActivo === dataAsset?.date ? newFechaActivo : dateAsset,
       typeService: servicio,
       quantity: cantidad,
-      urlImg: urlImg,
+      urlImg: dataAsset?.urlImg ? dataAsset?.urlImg : urlImg,
       price: precio,
     };
-    createNewAsset(data);
 
-    if (assetRef.id) {
-      setFile("");
-      setNombreActivo("");
-      setFechaActivo(null);
-      setServicio("");
-      setCantidad(1);
-      setPrecio(0);
-      setTypeAlert("success");
-      setMsg("Activo agregado correctamente");
-      setTimeout(() => {
-        setMsg("");
-        setTypeAlert("");
-      }, 2500);
-      return;
-    }
+    editAssetById(idAsset, data);
   };
-
   return (
     <Grid
       container
@@ -184,7 +163,7 @@ const FormNuevoActivo = () => {
           <InputLabel htmlFor="outlined-adornment-amount">Precio</InputLabel>
           <OutlinedInput
             inputprops={{
-              inputProps: {
+              inputprops: {
                 min: 0,
               },
             }}
@@ -219,4 +198,4 @@ const FormNuevoActivo = () => {
   );
 };
 
-export default FormNuevoActivo;
+export default FormEditActivo;

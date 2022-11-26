@@ -1,4 +1,8 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
+import useActivo from "../hooks/useActivo";
+import { doc, deleteDoc } from "firebase/firestore";
+import { db } from "../firebase/firebase";
 import { styled } from "@mui/material/styles";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -10,8 +14,12 @@ import Paper from "@mui/material/Paper";
 import EditIcon from "@mui/icons-material/Edit";
 import IconButton from "@mui/material/IconButton";
 import DeleteIcon from "@mui/icons-material/Delete";
+import CircularProgress from "@mui/material/CircularProgress";
 
 const TableAssets = ({ rows }) => {
+  const { getAssets, loading, setHeaderNav, getAssetById } = useActivo();
+  const navigate = useNavigate();
+
   const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
       backgroundColor: "#101F33",
@@ -32,7 +40,24 @@ const TableAssets = ({ rows }) => {
     },
   }));
 
-  return (
+  const deleteAsset = async (id) => {
+    try {
+      await deleteDoc(doc(db, "assets", id));
+      await getAssets();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const toEdit = async (id) => {
+    await getAssetById(id);
+    setHeaderNav(2);
+    navigate("/editasset");
+  };
+
+  return loading ? (
+    <CircularProgress />
+  ) : (
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 700 }} aria-label="customized table">
         <TableHead>
@@ -71,10 +96,18 @@ const TableAssets = ({ rows }) => {
               </StyledTableCell>
               <StyledTableCell align="center">{row?.date}</StyledTableCell>
               <StyledTableCell align="center">
-                <IconButton aria-label="edit" color="info">
+                <IconButton
+                  aria-label="edit"
+                  color="info"
+                  onClick={() => toEdit(row.id)}
+                >
                   <EditIcon />
                 </IconButton>
-                <IconButton aria-label="delete" color="error">
+                <IconButton
+                  aria-label="delete"
+                  color="error"
+                  onClick={() => deleteAsset(row.id)}
+                >
                   <DeleteIcon />
                 </IconButton>
               </StyledTableCell>

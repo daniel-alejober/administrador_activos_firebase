@@ -17,9 +17,10 @@ const AdminProvider = ({ children }) => {
         email,
         password
       );
+
       setUserAuth(userCredential.user);
-      if (userAuth.accessToken) {
-        localStorage.setItem("user", JSON.stringify(userAuth));
+      if (userCredential?.user) {
+        localStorage.setItem("user", JSON.stringify(userCredential?.user));
         navigate("/");
       }
     } catch (error) {
