@@ -25,20 +25,24 @@ export default function Navigator(props) {
     navigate("/");
   };
 
+  const consol = () => {
+    console.log("hola");
+  };
+
   const logout = () => {
     localStorage.removeItem("user");
     navigate("/login");
   };
 
-  const consol = () => {
-    console.log("hola");
+  const goToServices = () => {
+    navigate("/services");
   };
 
   const categories = [
     {
       id: "Build",
       children: [
-        { id: "Servicios", icon: <DesignServicesIcon />, fn: consol },
+        { id: "Servicios", icon: <DesignServicesIcon />, fn: goToServices },
         { id: "Personal", icon: <PeopleIcon />, fn: consol },
         { id: "Inventario", icon: <InventoryIcon />, fn: consol },
         { id: "Trabajos", icon: <WorkHistoryIcon />, fn: consol },

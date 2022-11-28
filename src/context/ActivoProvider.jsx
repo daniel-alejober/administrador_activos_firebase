@@ -22,6 +22,16 @@ const ActivoProvider = ({ children }) => {
   const [loading, setLoading] = useState(false);
   const [dataAsset, setDataAsset] = useState({});
   const [idAsset, setIdAsset] = useState("");
+  const [rowsServices, setRowsServices] = useState([]);
+  const [serviceId, setServiceId] = useState("");
+  const [openModal, setOpenModal] = useState(false);
+  const [nameService, setNameService] = useState("");
+  const [dataService, setDataService] = useState({});
+
+  const handleOpen = () => {
+    setNameService("");
+    setOpenModal(true);
+  };
 
   const createNewAsset = async ({
     nameAsset,
@@ -75,7 +85,7 @@ const ActivoProvider = ({ children }) => {
       const docRef = doc(db, "assets", id);
       const docSnap = await getDoc(docRef);
       if (docSnap.exists()) {
-        setDataAsset(docSnap.data());
+        setDataAsset();
       }
     } catch (error) {
       console.log(data);
@@ -100,6 +110,42 @@ const ActivoProvider = ({ children }) => {
     }
   };
 
+  const getServices = async () => {
+    setLoading(true);
+    let list = [];
+    try {
+      const querySnapshot = await getDocs(collection(db, "services"));
+      querySnapshot.forEach((doc) => {
+        let data = doc.data();
+        data.id = doc.id;
+        list.push(data);
+      });
+      setRowsServices(list);
+
+      setLoading(false);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const getServiceById = async (id) => {
+    setServiceId(id);
+    try {
+      const docRef = doc(db, "services", id);
+      const docSnap = await getDoc(docRef);
+      if (docSnap.exists()) {
+        setDataService(docSnap.data());
+      }
+    } catch (error) {
+      console.log(data);
+    }
+  };
+
+  const editService = async (id) => {
+    await getServiceById(id);
+    handleOpen();
+  };
+
   return (
     <ActivoContext.Provider
       value={{
@@ -111,6 +157,11 @@ const ActivoProvider = ({ children }) => {
         loading,
         dataAsset,
         idAsset,
+        rowsServices,
+        serviceId,
+        openModal,
+        nameService,
+        dataService,
         getAssets,
         setFile,
         setUrlImg,
@@ -118,6 +169,12 @@ const ActivoProvider = ({ children }) => {
         createNewAsset,
         getAssetById,
         editAssetById,
+        getServices,
+        editService,
+        handleOpen,
+        setOpenModal,
+        setNameService,
+        setDataService,
       }}
     >
       {children}

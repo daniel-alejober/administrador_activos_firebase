@@ -28,13 +28,8 @@ const AdminProvider = ({ children }) => {
     }
   };
 
-  const logout = () => {
-    localStorage.removeItem("user");
-    navigate("/login");
-  };
-
   return (
-    <AdminContext.Provider value={{ userAuth, codeError, login, logout }}>
+    <AdminContext.Provider value={{ userAuth, codeError, login }}>
       {children}
     </AdminContext.Provider>
   );
