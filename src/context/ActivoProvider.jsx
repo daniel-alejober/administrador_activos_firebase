@@ -22,42 +22,59 @@ const ActivoProvider = ({ children }) => {
   const [loading, setLoading] = useState(false);
   const [dataAsset, setDataAsset] = useState({});
   const [idAsset, setIdAsset] = useState("");
-  const [rowsServices, setRowsServices] = useState([]);
-  const [serviceId, setServiceId] = useState("");
-  const [openModal, setOpenModal] = useState(false);
-  const [nameService, setNameService] = useState("");
-  const [dataService, setDataService] = useState({});
-
-  const handleOpen = () => {
-    setNameService("");
-    setOpenModal(true);
-  };
 
   const createNewAsset = async ({
-    nameAsset,
-    date,
-    typeService,
-    quantity,
+    tipoDispositivo,
+    ubicacion,
+    piso,
+    nombre,
+    curp,
+    telefono,
+    perfilDispo,
+    noSerie,
+    ip,
+    modelo,
+    noResguardo,
+    dateImplemen,
+    inmueble,
+    puesto,
+    email,
+    extension,
+    jefeDir,
     urlImg,
-    price,
   }) => {
     //* setDoc(doc(db, "cities", "LA"){}) -- setDoc() sirve para crear o sobreescribir un documento pero el mejor hacerlos por el metodo addDoc() ya que asi firebase te genera un id unico
     //*Parametros de la funcion doc(db, "nombreColleccion", "idUnico")
     //* 1.- conexion a la db
     //* 2.- nombre de la coleccion
     //* 3.- id unico
-
+    let response;
     try {
       const docRef = await addDoc(collection(db, "assets"), {
-        nameAsset,
-        date,
-        typeService,
-        quantity,
+        tipoDispositivo,
+        ubicacion,
+        piso,
+        nombre,
+        curp,
+        telefono,
+        perfilDispo,
+        noSerie,
+        ip,
+        modelo,
+        noResguardo,
+        dateImplemen,
+        inmueble,
+        puesto,
+        email,
+        extension,
+        jefeDir,
         urlImg,
-        price,
       });
       setAssetRef(docRef);
+      response = true;
+      return response;
     } catch (error) {
+      response = false;
       console.log(error);
     }
   };
@@ -85,65 +102,66 @@ const ActivoProvider = ({ children }) => {
       const docRef = doc(db, "assets", id);
       const docSnap = await getDoc(docRef);
       if (docSnap.exists()) {
-        setDataAsset();
+        setDataAsset(docSnap.data());
       }
     } catch (error) {
       console.log(data);
     }
   };
 
-  const editAssetById = async (id, data) => {
+  const editAssetById = async (
+    id,
+    {
+      tipoDispositivo,
+      ubicacion,
+      piso,
+      nombre,
+      curp,
+      telefono,
+      perfilDispo,
+      noSerie,
+      ip,
+      modelo,
+      noResguardo,
+      dateImplemen,
+      inmueble,
+      puesto,
+      email,
+      extension,
+      jefeDir,
+      urlImg,
+    }
+  ) => {
+    let response;
     try {
       const docRef = doc(db, "assets", id);
-
+      
       await setDoc(docRef, {
-        nameAsset: data?.nameAsset,
-        date: data?.date,
-        typeService: data?.typeService,
-        quantity: data?.quantity,
-        urlImg: data?.urlImg,
-        price: data?.price,
+        tipoDispositivo,
+        ubicacion,
+        piso,
+        nombre,
+        curp,
+        telefono,
+        perfilDispo,
+        noSerie,
+        ip,
+        modelo,
+        noResguardo,
+        dateImplemen,
+        inmueble,
+        puesto,
+        email,
+        extension,
+        jefeDir,
+        urlImg,
       });
-      navigate("/");
+      response = true;
+      return response;
     } catch (error) {
+      response = false;
       console.log(error);
     }
-  };
-
-  const getServices = async () => {
-    setLoading(true);
-    let list = [];
-    try {
-      const querySnapshot = await getDocs(collection(db, "services"));
-      querySnapshot.forEach((doc) => {
-        let data = doc.data();
-        data.id = doc.id;
-        list.push(data);
-      });
-      setRowsServices(list);
-
-      setLoading(false);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  const getServiceById = async (id) => {
-    setServiceId(id);
-    try {
-      const docRef = doc(db, "services", id);
-      const docSnap = await getDoc(docRef);
-      if (docSnap.exists()) {
-        setDataService(docSnap.data());
-      }
-    } catch (error) {
-      console.log(data);
-    }
-  };
-
-  const editService = async (id) => {
-    await getServiceById(id);
-    handleOpen();
   };
 
   return (
@@ -157,11 +175,6 @@ const ActivoProvider = ({ children }) => {
         loading,
         dataAsset,
         idAsset,
-        rowsServices,
-        serviceId,
-        openModal,
-        nameService,
-        dataService,
         getAssets,
         setFile,
         setUrlImg,
@@ -169,12 +182,6 @@ const ActivoProvider = ({ children }) => {
         createNewAsset,
         getAssetById,
         editAssetById,
-        getServices,
-        editService,
-        handleOpen,
-        setOpenModal,
-        setNameService,
-        setDataService,
       }}
     >
       {children}

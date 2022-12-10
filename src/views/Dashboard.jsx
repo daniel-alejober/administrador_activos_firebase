@@ -26,7 +26,7 @@ export default function Dashboard() {
 
   const toNewAsset = () => {
     setHeaderNav(1);
-    navigate("/newasset");
+    navigate("/newticket");
   };
 
   return (
@@ -55,7 +55,7 @@ export default function Dashboard() {
             </Grid>
             <Grid item>
               <Button variant="contained" sx={{ mr: 1 }} onClick={toNewAsset}>
-                Agregar Activo
+                Nuevo Ticket
               </Button>
               <Tooltip title="Reload">
                 <IconButton>

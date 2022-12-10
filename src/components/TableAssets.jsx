@@ -52,7 +52,7 @@ const TableAssets = ({ rows }) => {
   const toEdit = async (id) => {
     await getAssetById(id);
     setHeaderNav(2);
-    navigate("/editasset");
+    navigate("/editticket");
   };
 
   return loading ? (

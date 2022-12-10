@@ -3,7 +3,6 @@ import Login from "./views/Login";
 import Dashboard from "./views/Dashboard";
 import NuevoActivo from "./views/NuevoActivo";
 import EditarActivo from "./views/EditarActivo";
-import Servicios from "./views/Servicios";
 import { ProtectedRroutes } from "./ProtectedRroutes";
 import { AdminProvider } from "../src/context/AdminProvider";
 import { ActivoProvider } from "../src/context/ActivoProvider";
@@ -17,9 +16,8 @@ function App() {
             <Route path="/login" element={<Login />} />
             <Route element={<ProtectedRroutes />}>
               <Route path="/" element={<Dashboard />} />
-              <Route path="/newasset" element={<NuevoActivo />} />
-              <Route path="/editasset" element={<EditarActivo />} />
-              <Route path="/services" element={<Servicios />} />
+              <Route path="/newticket" element={<NuevoActivo />} />
+              <Route path="/editticket" element={<EditarActivo />} />
             </Route>
           </Routes>
         </ActivoProvider>

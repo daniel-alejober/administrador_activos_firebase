@@ -53,8 +53,8 @@ function Header() {
       >
         <Tabs value={headerNav} textColor="inherit">
           <Tab label="Inventario" />
-          <Tab label="Nuevo Activo" />
-          <Tab label="Actualizar Activo" />
+          <Tab label="Nuevo Ticket" />
+          <Tab label="Actualizar Ticket" />
         </Tabs>
       </AppBar>
     </>
