@@ -89,7 +89,7 @@ const Login = () => {
         background: "#081627",
       }}
     >
-      <button onClick={navigate("/report-ticket/1")}></button>
+      <button onClick={navigate("/report-ticket/1")}>Reporte</button>
       <h1 style={{ color: "#006db3", fontSize: "50px", textAlign: "center" }}>
         ADMINISTRADOR DE ACTIVOS
       </h1>
