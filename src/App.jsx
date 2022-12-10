@@ -15,7 +15,7 @@ function App() {
         <ActivoProvider>
           <Routes>
             <Route path="/login" element={<Login />} />
-            <Route path="/report-ticket/:id" element={<ReporteQr />} />
+            <Route path="/reportticket/:id" element={<ReporteQr />} />
             <Route element={<ProtectedRroutes />}>
               <Route path="/" element={<Dashboard />} />
               <Route path="/newticket" element={<NuevoActivo />} />
