@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useState } from "react";
+import QRCode from "qrcode";
 import { useNavigate } from "react-router-dom";
 import useActivo from "../hooks/useActivo";
 import { doc, deleteDoc } from "firebase/firestore";
@@ -15,10 +16,12 @@ import EditIcon from "@mui/icons-material/Edit";
 import IconButton from "@mui/material/IconButton";
 import DeleteIcon from "@mui/icons-material/Delete";
 import CircularProgress from "@mui/material/CircularProgress";
+import QrCodeIcon from "@mui/icons-material/QrCode";
 
 const TableAssets = ({ rows }) => {
   const { getAssets, loading, setHeaderNav, getAssetById } = useActivo();
   const navigate = useNavigate();
+  const [qr, setQr] = useState("");
 
   const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
@@ -55,6 +58,20 @@ const TableAssets = ({ rows }) => {
     navigate("/editticket");
   };
 
+  const generateCode = (id) => {
+    const urlActivo = `https://admin-activos.netlify.app/report-ticket/${id}`;
+
+    QRCode.toDataURL(urlActivo, (err, url) => {
+      if (err) return console.log(err);
+      let downloadLink = document.createElement("a");
+      downloadLink.href = url;
+      downloadLink.download = id;
+      document.body.appendChild(downloadLink);
+      downloadLink.click();
+      document.body.removeChild(downloadLink);
+    });
+  };
+
   return loading ? (
     <CircularProgress />
   ) : (
@@ -63,12 +80,12 @@ const TableAssets = ({ rows }) => {
         <TableHead>
           <TableRow>
             <StyledTableCell align="center">Imagen</StyledTableCell>
-            <StyledTableCell align="center">Nombre</StyledTableCell>
-            <StyledTableCell align="center">Servicio</StyledTableCell>
-            <StyledTableCell align="center">Cantidad</StyledTableCell>
-            <StyledTableCell align="center">Costo</StyledTableCell>
+            <StyledTableCell align="center">Tipo Dispositivo</StyledTableCell>
+            <StyledTableCell align="center">Solicitante</StyledTableCell>
+            <StyledTableCell align="center">Email</StyledTableCell>
             <StyledTableCell align="center">Fecha</StyledTableCell>
             <StyledTableCell align="center">Acciones</StyledTableCell>
+            <StyledTableCell align="center">QR</StyledTableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -86,15 +103,15 @@ const TableAssets = ({ rows }) => {
                   alt="activo"
                 />
               </StyledTableCell>
-              <StyledTableCell align="center">{row?.nameAsset}</StyledTableCell>
               <StyledTableCell align="center">
-                {row?.typeService}
+                {row?.tipoDispositivo}
               </StyledTableCell>
-              <StyledTableCell align="center">{row?.quantity}</StyledTableCell>
+
+              <StyledTableCell align="center">{row?.nombre}</StyledTableCell>
+              <StyledTableCell align="center">{row?.email}</StyledTableCell>
               <StyledTableCell align="center">
-                ${row?.price * row?.quantity}
+                {row?.dateImplemen}
               </StyledTableCell>
-              <StyledTableCell align="center">{row?.date}</StyledTableCell>
               <StyledTableCell align="center">
                 <IconButton
                   aria-label="edit"
@@ -110,6 +127,19 @@ const TableAssets = ({ rows }) => {
                 >
                   <DeleteIcon />
                 </IconButton>
+              </StyledTableCell>
+              <StyledTableCell align="center">
+                {qr ? (
+                  <img src={qr} alt={`qr ${row.id}`} />
+                ) : (
+                  <IconButton
+                    aria-label="Generar QR"
+                    color="info"
+                    onClick={() => generateCode(row.id)}
+                  >
+                    <QrCodeIcon />
+                  </IconButton>
+                )}
               </StyledTableCell>
             </StyledTableRow>
           ))}

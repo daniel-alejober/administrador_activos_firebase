@@ -1,6 +1,5 @@
 export const filterByTerm = (term, array) => {
-  //    return array = array.filter((entry) =>
-  //                entry.otActivity
-  //                  .toLowerCase()
-  //                  .includes(this.txtSearch.toLocaleLowerCase())
+  return array.filter((entry) =>
+    entry.nombre.toLowerCase().includes(term.toLocaleLowerCase())
+  );
 };

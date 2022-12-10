@@ -135,7 +135,7 @@ const ActivoProvider = ({ children }) => {
     let response;
     try {
       const docRef = doc(db, "assets", id);
-      
+
       await setDoc(docRef, {
         tipoDispositivo,
         ubicacion,
@@ -182,6 +182,7 @@ const ActivoProvider = ({ children }) => {
         createNewAsset,
         getAssetById,
         editAssetById,
+        setRows,
       }}
     >
       {children}

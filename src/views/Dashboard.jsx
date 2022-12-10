@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import useActivo from "../hooks/useActivo";
 import AppBar from "@mui/material/AppBar";
@@ -14,11 +14,13 @@ import SearchIcon from "@mui/icons-material/Search";
 import RefreshIcon from "@mui/icons-material/Refresh";
 import TableAssets from "../components/TableAssets";
 import CircularProgress from "@mui/material/CircularProgress";
+import { filterByTerm } from "../hooks/filterByTerm";
 
 export default function Dashboard() {
   const navigate = useNavigate();
 
-  const { setHeaderNav, rows, loading, getAssets } = useActivo();
+  const { setHeaderNav, rows, loading, getAssets, setRows } = useActivo();
+  const [solicitante, setSolicitante] = useState("");
 
   useEffect(() => {
     getAssets();
@@ -27,6 +29,13 @@ export default function Dashboard() {
   const toNewAsset = () => {
     setHeaderNav(1);
     navigate("/newticket");
+  };
+
+  const buscar = (e) => {
+    if (e.key === "Enter") {
+      setRows(filterByTerm(solicitante, rows));
+      setSolicitante("");
+    }
   };
 
   return (
@@ -45,23 +54,26 @@ export default function Dashboard() {
             <Grid item xs>
               <TextField
                 fullWidth
-                placeholder="Buscar"
+                placeholder="Buscar por solicitante"
                 InputProps={{
                   disableUnderline: true,
                   sx: { fontSize: "default" },
                 }}
                 variant="standard"
+                onKeyDown={buscar}
+                value={solicitante}
+                onChange={(e) => setSolicitante(e.target.value)}
               />
             </Grid>
             <Grid item>
-              <Button variant="contained" sx={{ mr: 1 }} onClick={toNewAsset}>
-                Nuevo Ticket
-              </Button>
-              <Tooltip title="Reload">
+              <Tooltip title="Reload" onClick={getAssets}>
                 <IconButton>
                   <RefreshIcon color="inherit" sx={{ display: "block" }} />
                 </IconButton>
               </Tooltip>
+              <Button variant="contained" sx={{ mr: 1 }} onClick={toNewAsset}>
+                Nuevo Ticket
+              </Button>
             </Grid>
           </Grid>
         </Toolbar>
