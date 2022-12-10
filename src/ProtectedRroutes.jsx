@@ -188,5 +188,5 @@ export const ProtectedRroutes = () => {
     );
   }
 
-  return <Navigate to="/login" />;
+  return <Navigate to="/" />;
 };

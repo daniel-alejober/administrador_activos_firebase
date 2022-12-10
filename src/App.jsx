@@ -14,10 +14,10 @@ function App() {
       <AdminProvider>
         <ActivoProvider>
           <Routes>
-            <Route path="/login" element={<Login />} />
+            <Route path="/" element={<Login />} />
             <Route path="/report-ticket/:id" element={<ReporteQr />} />
             <Route element={<ProtectedRroutes />}>
-              <Route path="/" element={<Dashboard />} />
+              <Route path="/dashboard" element={<Dashboard />} />
               <Route path="/newticket" element={<NuevoActivo />} />
               <Route path="/editticket" element={<EditarActivo />} />
             </Route>

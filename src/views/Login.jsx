@@ -11,11 +11,10 @@ import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import Alert from "@mui/material/Alert";
 import Box from "@mui/material/Box";
-import { useNavigate } from "react-router-dom";
 
 const Login = () => {
   const { codeError, login } = useAdmin();
-  const navigate = useNavigate();
+
   const [values, setValues] = useState({
     password: "",
     email: "",
@@ -89,7 +88,6 @@ const Login = () => {
         background: "#081627",
       }}
     >
-      <button onClick={navigate("/report-ticket/1")}>Reporte</button>
       <h1 style={{ color: "#006db3", fontSize: "50px", textAlign: "center" }}>
         ADMINISTRADOR DE ACTIVOS
       </h1>

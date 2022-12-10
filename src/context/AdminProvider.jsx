@@ -21,7 +21,7 @@ const AdminProvider = ({ children }) => {
       setUserAuth(userCredential.user);
       if (userCredential?.user) {
         localStorage.setItem("user", JSON.stringify(userCredential?.user));
-        navigate("/");
+        navigate("/dashboard");
       }
     } catch (error) {
       setCodeError(error.code);

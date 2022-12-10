@@ -27,7 +27,7 @@ export default function Navigator(props) {
 
   const logout = () => {
     localStorage.removeItem("user");
-    navigate("/login");
+    navigate("/");
   };
 
   const categories = [
