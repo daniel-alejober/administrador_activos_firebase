@@ -59,7 +59,7 @@ const TableAssets = ({ rows }) => {
   };
 
   const generateCode = (id) => {
-    const urlActivo = `https://admin-activos.netlify.app/reportticket/${id}`;
+    const urlActivo = `https://admin-activos.netlify.app/report-ticket/${id}`;
 
     QRCode.toDataURL(urlActivo, (err, url) => {
       if (err) return console.log(err);

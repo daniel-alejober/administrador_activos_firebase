@@ -1,9 +1,7 @@
-import React from 'react'
+import React from "react";
 
 const ReporteQr = () => {
-  return (
-    <div>ReporteQr</div>
-  )
-}
+  return <div>ReporteQr</div>;
+};
 
-export default ReporteQr
+export default ReporteQr;
