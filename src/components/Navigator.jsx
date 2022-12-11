@@ -22,7 +22,7 @@ export default function Navigator(props) {
 
   const home = () => {
     setHeaderNav(0);
-    navigate("/");
+    navigate("/dashboard");
   };
 
   const logout = () => {
