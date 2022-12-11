@@ -4,7 +4,7 @@
   text-align: center;
   margin: 0 auto;
 }
-@media (min-width: 768px) {
+@media (min-width: 900px) {
   .titulo {
     width: 80%;
     font-size: 30px;
@@ -14,11 +14,21 @@
 .containerInfo {
   display: grid;
   grid-template-columns: 1fr 1fr;
+  margin-top: 20px;
 }
 
-@media (min-width: 768px) {
+@media (max-width: 900px) {
   .containerInfo {
     display: flex;
     flex-direction: column;
+  }
+}
+
+@media (max-width: 900px) {
+  .info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
   }
 }

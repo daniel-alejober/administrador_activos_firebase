@@ -40,7 +40,7 @@ const ReporteQr = () => {
       <div>
         <h1 className="titulo">{`Reporte Ticket ${id}`}</h1>
         <div className="containerInfo">
-          <div>
+          <div className="info">
             <h2
               style={{
                 color: "#6fa1b9",
@@ -116,7 +116,7 @@ const ReporteQr = () => {
               </span>
             </p>
           </div>
-          <div>
+          <div className="info">
             <h2
               style={{
                 color: "#6fa1b9",
