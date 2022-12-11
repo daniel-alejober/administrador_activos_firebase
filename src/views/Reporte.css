@@ -1,0 +1,24 @@
+.titulo {
+  color: #006db3;
+  font-size: 40px;
+  text-align: center;
+  margin: 0 auto;
+}
+@media (min-width: 768px) {
+  .titulo {
+    width: 80%;
+    font-size: 30px;
+  }
+}
+
+.containerInfo {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+@media (min-width: 768px) {
+  .containerInfo {
+    display: flex;
+    flex-direction: column;
+  }
+}

@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import Box from "@mui/material/Box";
 import { db } from "../firebase/firebase";
 import { doc, getDoc } from "firebase/firestore";
+import "./Reporte.css";
 
 const ReporteQr = () => {
   const { id } = useParams();
@@ -37,10 +38,8 @@ const ReporteQr = () => {
       }}
     >
       <div>
-        <h1 style={{ color: "#006db3", fontSize: "40px", textAlign: "center" }}>
-          {`Reporte Ticket ${id}`}
-        </h1>
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr" }}>
+        <h1 className="titulo">{`Reporte Ticket ${id}`}</h1>
+        <div className="containerInfo">
           <div>
             <h2
               style={{
