@@ -52,9 +52,9 @@ function Header() {
         sx={{ zIndex: 0 }}
       >
         <Tabs value={headerNav} textColor="inherit">
-          <Tab label="Inventario" />
-          <Tab label="Nuevo Ticket" />
-          <Tab label="Actualizar Ticket" />
+          <Tab label="Activo" />
+          <Tab label="Nuevo Activo" />
+          <Tab label="Actualizar Activo" />
         </Tabs>
       </AppBar>
     </>
