@@ -72,7 +72,7 @@ export default function Dashboard() {
                 </IconButton>
               </Tooltip>
               <Button variant="contained" sx={{ mr: 1 }} onClick={toNewAsset}>
-                Nuevo Ticket
+                Nuevo Activo
               </Button>
             </Grid>
           </Grid>
