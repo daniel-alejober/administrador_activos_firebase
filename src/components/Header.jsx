@@ -13,7 +13,7 @@ function Header() {
 
   return (
     <>
-      <AppBar color="primary" position="sticky" elevation={0}>
+      <AppBar color="#56242a" position="sticky" elevation={0}>
         <Toolbar>
           <Grid container spacing={1} alignItems="center">
             <Grid item xs />
