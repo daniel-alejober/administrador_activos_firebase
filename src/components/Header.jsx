@@ -20,7 +20,7 @@ function Header() {
             <Grid item>
               <IconButton color="inherit" sx={{ p: 0.5 }}>
                 <Avatar
-                  src="https://firebasestorage.googleapis.com/v0/b/administrador-activos.appspot.com/o/UPIICSA.jpg?alt=media&token=b4a5a17c-e164-4f86-b3ed-4d76192a3c0d"
+                  src="https://firebasestorage.googleapis.com/v0/b/administrador-activos.appspot.com/o/WhatsApp%20Image%202023-01-02%20at%209.38.12%20PM.jpeg?alt=media&token=db52e559-cc3c-452e-982d-f08b32281f41"
                   alt="My Avatar"
                 />
               </IconButton>
