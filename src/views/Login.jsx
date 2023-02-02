@@ -85,10 +85,10 @@ const Login = () => {
         alignItems: "center",
         justifyContent: "center",
         flexDirection: "column",
-        background: "#13322b",
+        background: "#081627",
       }}
     >
-      <h1 style={{ color: "#9d2449", fontSize: "50px", textAlign: "center" }}>
+      <h1 style={{ color: "#006db3", fontSize: "50px", textAlign: "center" }}>
         ADMINISTRADOR DE ACTIVOS
       </h1>
       {msg && (
